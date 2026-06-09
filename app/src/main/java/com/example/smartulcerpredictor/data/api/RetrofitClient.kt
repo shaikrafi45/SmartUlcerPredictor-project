@@ -1,3 +1,5 @@
+
+
 package com.example.smartulcerpredictor.data.api
 
 import android.content.Context
@@ -8,7 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
     // 10.0.2.2 is the special IP to access your computer's localhost from the Android emulator.
     // If you are using a physical phone, change this to your computer's local IP address (e.g. 192.168.1.5)
-    private const val BASE_URL = "http://192.168.1.11/smart_ulcer_api/"
+    private const val BASE_URL = "http://" +
+            "172.20.10.4/smart_ulcer_api/"
 
     val instance: ApiService by lazy {
         val retrofit = Retrofit.Builder()

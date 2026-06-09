@@ -95,7 +95,6 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("about") {
                         AboutScreen(
-                            onBack = { navController.popBackStack() },
                             onHistory = { navController.navigate("history") },
                             onLogout = {
                                 // Clear persisted session so user must log in again

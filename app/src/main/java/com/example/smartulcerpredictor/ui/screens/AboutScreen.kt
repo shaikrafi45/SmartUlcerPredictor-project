@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.sp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    onBack: () -> Unit = {},
     onHistory: () -> Unit = {},
     onLogout: () -> Unit = {},
     onUploadClick: () -> Unit = {}
@@ -40,20 +39,6 @@ fun AboutScreen(
                                 fontWeight = FontWeight.Bold,
                                 color = Color(0xFF1976D2)
                             )
-                        )
-                    }
-                },
-                navigationIcon = {
-                    TextButton(onClick = onBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color(0xFF1976D2)
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Back",
-                            color = Color(0xFF1976D2)
                         )
                     }
                 },
