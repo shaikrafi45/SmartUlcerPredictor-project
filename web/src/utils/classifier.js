@@ -47,10 +47,44 @@ export class UlcerClassifier {
     }
 
     /**
+     * Dynamically load external scripts
+     */
+    loadScript(src) {
+        return new Promise((resolve, reject) => {
+            if (typeof document === 'undefined') {
+                resolve();
+                return;
+            }
+            if (document.querySelector(`script[src="${src}"]`)) {
+                resolve();
+                return;
+            }
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = () => resolve();
+            script.onerror = (err) => reject(new Error(`Failed to load script: ${src}`));
+            document.head.appendChild(script);
+        });
+    }
+
+    /**
      * Initializes the TFLite model
      */
     async init() {
         if (this.modelLoaded) return true;
+        
+        // Dynamically load TensorFlow.js CDNs if not already loaded on window
+        if (!this.tfliteAvailable) {
+            console.log("Dynamically loading TensorFlow.js from CDN...");
+            try {
+                await this.loadScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js");
+                await this.loadScript("https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite/dist/tf-tflite.min.js");
+            } catch (e) {
+                console.warn("Failed to load TensorFlow CDNs in offline state. Fallback simulation will be used.", e);
+                return false;
+            }
+        }
         
         if (!this.tfliteAvailable) {
             console.warn("TensorFlow.js TFLite is not loaded on window. Fallback simulation will be used.");
